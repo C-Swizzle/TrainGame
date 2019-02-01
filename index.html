@@ -1,48 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase.js"></script>
-    <script
-  src="https://code.jquery.com/jquery-3.3.1.min.js"
-  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-  crossorigin="anonymous"></script>
-  <script type="text/javascript" src="logic.js"></script>
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet"
-   integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-  <link rel="stylesheet" type="text/css" href="style.css">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Document</title>
+        <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase.js"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+                crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+        
+        <script type="text/javascript" src="logic.js"></script>
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet"
+                integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="style.css">
 
 </head>
+
 <body>
-<div class="jumbotron text-center">TRAIN TIME!</div>
+        <div class="jumbotron text-center"><h1 class="text-danger">TRAIN TIME!</h1></div>
 
 
-<div class="container">
-    <table class="table table-striped" id="main-table">
-        <thead>
-            <tr>
-                <th class="text-center">
-                        Train Name
-                </th>
-                <th class="text-center">
-                        Destination
-                </th>
-                <th class="text-center">
-                        Frequency
-                </th>
-                <th class="text-center">
-                        Next Arrival
-                </th>
-                <th class="text-center">
-                        Minutes Away
-                </th>
-            </tr>
+        <div class="container">
+                <table class="table table-striped" id="main-table">
+                        <thead>
+                                <tr>
+                                        <th class="text-center">
+                                                Train Name
+                                        </th>
+                                        <th class="text-center">
+                                                Destination
+                                        </th>
+                                        <th class="text-center">
+                                                Frequency (mins)
+                                        </th>
+                                        <th class="text-center">
+                                                Next Arrival
+                                        </th>
+                                        <th class="text-center">
+                                                Minutes Away
+                                        </th>
+                                </tr>
 
-    </thead>
-    </table>
-</div>
+                        </thead>
+                </table>
+
+
+                <form>
+                        <div class="form-group">
+                                <label for="train-name">Train Name</label>
+                                <input type="text" class="form-control" id="train-name" placeholder="Swayze Express">
+                                <br>
+                                <label for="destination">Destination</label>
+                                <input type="text" class="form-control" id="destination" placeholder="Nova Scotia">
+                                <br>
+                                <label for="train-name">First Train -- military time (HH:MM) between 00:00 and 23:59</label>
+                                <input type="text" class="form-control" id="first-train" placeholder="00:00">
+                                <br>
+                                <label for="train-name">Frequency (min)</label>
+                                <input type="text" class="form-control" id="frequency" placeholder="10">
+                                <br>
+                                <button type="submit" id="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                </form>
+        </div>
 </body>
+
 </html>
