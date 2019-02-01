@@ -71,10 +71,25 @@
 
   });
 
-  database.ref().on("value", function(snap) {
+  database.ref().on("child_added", function(snap) {
 
-    console.log(snap.val());
+    // console.log(snap.val());
+    var now = moment().format("HH:mm");
+    var firstTrain = snap.val().first;
+    
+    firstTrain=moment(firstTrain, "HH:mm").format("LTS");
+    var now = moment().format("HH:mm");
+    var diff =  moment(now, "HH:mm").diff(moment(firstTrain, "HH:mm"), "minutes");
+    
+    
+    console.log(diff);
     })
 
-  console.log(moment().format("H HH"));
+  // console.log(moment().format("HH:mm"));
+  var date = "01:00";
+  var now = moment().format("HH:mm");
+  // console.log(moment().format("HH:mm").diff(date, "seconds"));
+  console.log(moment().format("HH:mm"));
+  var diff = moment(now, "HH:mm").diff(moment(date, "HH:mm"), "minutes");
+  console.log(diff);
 });
