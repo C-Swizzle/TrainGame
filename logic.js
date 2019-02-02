@@ -36,7 +36,7 @@
     console.log(moment(firstTrain, "HH:mm").format("HH:mm"));
     console.log(firstTrain);
     
-    if (moment(firstTrain, "HH:mm").format("HH:mm")) {
+    if (moment(firstTrain, "HH:mm").format("HH:mm") && trainFrequency<1440) {
 
 
     $("#train-name").val("");
@@ -60,11 +60,12 @@
   });
 
   database.ref().on("child_added", function(snap) {
-
+    
     console.log(snap.val());
     var now = moment().format("HH:mm");
     var firstTrain = snap.val().first;
-    
+    var deleteID = snap.key;
+    console.log(snap.key);
     // firstTrain=moment(firstTrain, "HH:mm").format("LTS");
     var now = moment().format("HH:mm");
     var diff =  moment(firstTrain, "HH:mm").diff(moment(now, "HH:mm"), "minutes");
@@ -82,27 +83,36 @@
     var next = moment(firstTrain, "HH:mm").format("LT");
     console.log(diff);
     var $tr = $("<tr>");
+    $tr.attr("id", snap.key);
 
 
     var $trainName = $("<td class='text-center'>");
-    $trainName.text(snap.val().name);
+    $trainName.attr("data-id", snap.key);
+    var $but=$("<button class='btn btn-danger delete-button-not-boot'>Delete</button>")
+    $but.attr("data-id", snap.key);
+    $tr.append($but);
+    $trainName.text(snap.val().name)
     $tr.append($trainName);
 
     var $trainDestination = $("<td class='text-center'>");
     $trainDestination.text(snap.val().destination);
+    $trainDestination.attr("data-id", snap.key);
     $tr.append($trainDestination);
 
    
   
     var $trainFrequency = $("<td class='text-center'>");
+    $trainFrequency.attr("data-id", snap.key);
     $trainFrequency.text(snap.val().frequency);
     $tr.append($trainFrequency);
 
     var $trainArrival = $("<td class='text-center'>");
+    $trainArrival.attr("data-id", snap.key);
     $trainArrival.text(next);
     $tr.append($trainArrival);
 
     var $trainMinutes = $("<td class='text-center'>");
+    $trainMinutes.attr("data-id", snap.key);
     $trainMinutes.text(diff);
     $tr.append($trainMinutes);
 
@@ -120,5 +130,13 @@
   var add = moment().format("HH:mm");
   add = moment(date, "HH:mm").add(10, "m").format("HH:mm");
   console.log(add);
+$(document).on('click', ".delete-button-not-boot", function(e)  {
+  e.preventDefault();
+var idDelete = $(this).attr("data-id");
+database.ref(idDelete).remove();
+idDeleteReal = "#" + idDelete;
+$(idDeleteReal).css("display", "none");
+});
+
 
 });
