@@ -17,29 +17,11 @@
 // var trainMinutes="12";
 
   function addTrain() {
-    var $tr = $("<tr>");
-
-    var $trainName = $("<td class='text-center'>");
-    $trainName.text(trainName);
-    $tr.append($trainName);
-
-    var $trainDestination = $("<td class='text-center'>");
-    $trainDestination.text(trainDestination);
-    $tr.append($trainDestination);
-
-    var $trainFrequency = $("<td class='text-center'>");
-    $trainFrequency.text(trainFrequency);
-    $tr.append($trainFrequency);
-
-    var $trainArrival = $("<td class='text-center'>");
-    $trainArrival.text(trainArrival);
-    $tr.append($trainArrival);
+    
    
-    var $trainMinutes = $("<td class='text-center'>");
-    $trainMinutes.text(trainMinutes);
-    $tr.append($trainMinutes);
-
-    $("#main-table").append($tr);
+   
+ 
+   
 
 
   }
@@ -49,16 +31,19 @@
     e.preventDefault();
     var trainName = $("#train-name").val();
     var trainDestination = $("#destination").val();
-    var trainFrequency = $("#frequency").val();
+    var trainFrequency = Number($("#frequency").val());
     var firstTrain = $("#first-train").val();
-
-
+    console.log(moment(firstTrain, "HH:mm").format("HH:mm"));
+    console.log(firstTrain);
+    
+    if (moment(firstTrain, "HH:mm").format("HH:mm")) {
 
 
     $("#train-name").val("");
     $("#destination").val("");
     $("#frequency").val("");
     $("#first-train").val("");
+
 
     database.ref().push({
       name: trainName,
@@ -67,6 +52,9 @@
       first: firstTrain
 
     });
+  } else{
+    alert("Incorrect Format!");
+  }
 
 
   });
@@ -91,8 +79,35 @@
     diff =  moment(firstTrain, "HH:mm").diff(moment(now, "HH:mm"), "minutes");
     
     }
-    console.log(moment(firstTrain, "HH:mm").format("LT"));
+    var next = moment(firstTrain, "HH:mm").format("LT");
     console.log(diff);
+    var $tr = $("<tr>");
+
+
+    var $trainName = $("<td class='text-center'>");
+    $trainName.text(snap.val().name);
+    $tr.append($trainName);
+
+    var $trainDestination = $("<td class='text-center'>");
+    $trainDestination.text(snap.val().destination);
+    $tr.append($trainDestination);
+
+   
+  
+    var $trainFrequency = $("<td class='text-center'>");
+    $trainFrequency.text(snap.val().frequency);
+    $tr.append($trainFrequency);
+
+    var $trainArrival = $("<td class='text-center'>");
+    $trainArrival.text(next);
+    $tr.append($trainArrival);
+
+    var $trainMinutes = $("<td class='text-center'>");
+    $trainMinutes.text(diff);
+    $tr.append($trainMinutes);
+
+    $("#main-table").append($tr);
+
     })
 
   // console.log(moment().format("HH:mm"));
