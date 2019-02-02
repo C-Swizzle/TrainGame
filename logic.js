@@ -73,23 +73,37 @@
 
   database.ref().on("child_added", function(snap) {
 
-    // console.log(snap.val());
+    console.log(snap.val());
     var now = moment().format("HH:mm");
     var firstTrain = snap.val().first;
     
-    firstTrain=moment(firstTrain, "HH:mm").format("LTS");
+    // firstTrain=moment(firstTrain, "HH:mm").format("LTS");
     var now = moment().format("HH:mm");
-    var diff =  moment(now, "HH:mm").diff(moment(firstTrain, "HH:mm"), "minutes");
+    var diff =  moment(firstTrain, "HH:mm").diff(moment(now, "HH:mm"), "minutes");
+    // while (diff<0) {
+    //   firstTrain = moment(firstTrain, "HH:mm").add(snap.val().frequency, "m");
+    //   console.log(firstTrain);
+    //   diff =  moment(firstTrain, "HH:mm").diff(moment(now, "HH:mm"), "minutes");
+    // }
+    while (diff<0) {
+    var add = moment(firstTrain, "HH:mm").add(snap.val().frequency, "m").format("HH:mm");
+    firstTrain=add;
+    diff =  moment(firstTrain, "HH:mm").diff(moment(now, "HH:mm"), "minutes");
     
-    
+    }
+    console.log(moment(firstTrain, "HH:mm").format("LT"));
     console.log(diff);
     })
 
   // console.log(moment().format("HH:mm"));
-  var date = "01:00";
-  var now = moment().format("HH:mm");
-  // console.log(moment().format("HH:mm").diff(date, "seconds"));
-  console.log(moment().format("HH:mm"));
-  var diff = moment(now, "HH:mm").diff(moment(date, "HH:mm"), "minutes");
-  console.log(diff);
+  var date = "1:00";
+  // var now = moment().format("HH:mm");
+  // // console.log(moment().format("HH:mm").diff(date, "seconds"));
+  // console.log(moment().format("HH:mm"));
+  // var diff = moment(now, "HH:mm").diff(moment(date, "HH:mm"), "minutes");
+  // console.log(diff);
+  var add = moment().format("HH:mm");
+  add = moment(date, "HH:mm").add(10, "m").format("HH:mm");
+  console.log(add);
+
 });
