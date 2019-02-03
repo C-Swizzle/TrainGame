@@ -63,30 +63,70 @@
     var count = 0;
     console.log(snap.val());
     var now = moment().format("HH:mm");
-    var firstTrain = snap.val().first;
+    var firstTrain = moment(snap.val().first, "HH:mm").format("HH:mm");
+    // console.log(firstTrain);
     var deleteID = snap.key;
-    console.log(snap.key);
+    // console.log(snap.key);
     // firstTrain=moment(firstTrain, "HH:mm").format("LTS");
     var now = moment().format("HH:mm");
-    var diff =  moment(firstTrain, "HH:mm").diff(moment(now, "HH:mm"), "minutes");
+    var diff =  -1 * moment(firstTrain, "HH:mm").diff(moment(now, "HH:mm"), "minutes");
+    // console.log(diff);
+    var end = "23:59";
+    end = moment(end, "HH:mm").format("HH:mm");
+    var tilTomrw = moment(end).subtract(Number(diff), "minutes");
+    console.log(tilTomrw);
     // while (diff<0) {
     //   firstTrain = moment(firstTrain, "HH:mm").add(snap.val().frequency, "m");
     //   console.log(firstTrain);
     //   diff =  moment(firstTrain, "HH:mm").diff(moment(now, "HH:mm"), "minutes");
     // }
     
-    while (diff<0) {
-      count++;
-      if (count>1440) {
-        diff2 = "No more trains today!";
-      } else {
-    var add = moment(firstTrain, "HH:mm").add(snap.val().frequency, "m").format("HH:mm");
-    firstTrain=add;
-    diff =  moment(firstTrain, "HH:mm").diff(moment(now, "HH:mm"), "minutes");
-    diff2=diff;
-      }
-    }
-    var next = moment(firstTrain, "HH:mm").format("LT");
+    // while (diff<0) {
+    //   count++;
+    //   if (count>1440) {
+    //     diff2 = "No more trains today!";
+    //   } else {
+    // var add = moment(firstTrain, "HH:mm").add(snap.val().frequency, "m").format("HH:mm");
+    // firstTrain=add;
+    // diff =  moment(firstTrain, "HH:mm").diff(moment(now, "HH:mm"), "minutes");
+    // diff2=diff;
+    //   }
+    // }
+
+    // while loop fix attempt
+    if (diff<0) {
+      next = "No more today"
+    } else{
+    var tilNext = diff % snap.val().frequency;
+    // console.log(tilNext);
+    
+    var next = moment(now, "HH:mm").add(tilNext, "m").format("LT");
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+    //--------
+
+
+
+
+
+
+
+
+
+
+
+    // var next = moment(firstTrain, "HH:mm").format("LT");
     console.log(diff);
     var $tr = $("<tr>");
     $tr.attr("id", snap.key);
@@ -119,7 +159,7 @@
 
     var $trainMinutes = $("<td class='text-center'>");
     $trainMinutes.attr("data-id", snap.key);
-    $trainMinutes.text(diff2);
+    $trainMinutes.text(tilNext);
     $tr.append($trainMinutes);
 
     $("#main-table").append($tr);
