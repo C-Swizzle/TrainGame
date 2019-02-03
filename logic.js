@@ -60,7 +60,7 @@
   });
 
   database.ref().on("child_added", function(snap) {
-    
+    var count = 0;
     console.log(snap.val());
     var now = moment().format("HH:mm");
     var firstTrain = snap.val().first;
@@ -74,11 +74,17 @@
     //   console.log(firstTrain);
     //   diff =  moment(firstTrain, "HH:mm").diff(moment(now, "HH:mm"), "minutes");
     // }
+    
     while (diff<0) {
+      count++;
+      if (count>1440) {
+        diff2 = "No more trains today!";
+      } else {
     var add = moment(firstTrain, "HH:mm").add(snap.val().frequency, "m").format("HH:mm");
     firstTrain=add;
     diff =  moment(firstTrain, "HH:mm").diff(moment(now, "HH:mm"), "minutes");
-    
+    diff2=diff;
+      }
     }
     var next = moment(firstTrain, "HH:mm").format("LT");
     console.log(diff);
@@ -113,7 +119,7 @@
 
     var $trainMinutes = $("<td class='text-center'>");
     $trainMinutes.attr("data-id", snap.key);
-    $trainMinutes.text(diff);
+    $trainMinutes.text(diff2);
     $tr.append($trainMinutes);
 
     $("#main-table").append($tr);
